@@ -1,4 +1,4 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
+
 'use client';
 import { loginUser } from "@/app/services/auth/loginUser";
 import InputFieldError from "@/components/shared/InputFieldError";
