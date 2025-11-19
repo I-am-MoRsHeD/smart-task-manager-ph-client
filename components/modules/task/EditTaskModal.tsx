@@ -63,7 +63,7 @@ const EditTaskModal = ({ open, onClose, task, members }: EditTaskModalProps) => 
                                 name="title"
                                 defaultValue={task.title}
                             />
-                            <InputFieldError field="title" state={state} />
+                            {/* <InputFieldError field="title" state={state} /> */}
                         </Field>
 
                         {/* Description */}
@@ -75,7 +75,7 @@ const EditTaskModal = ({ open, onClose, task, members }: EditTaskModalProps) => 
                                 rows={3}
                                 defaultValue={task.description}
                             />
-                            <InputFieldError field="description" state={state} />
+                            {/* <InputFieldError field="description" state={state} /> */}
                         </Field>
 
                         {/* Assigned Member */}
