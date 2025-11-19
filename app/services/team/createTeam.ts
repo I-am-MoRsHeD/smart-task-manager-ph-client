@@ -2,7 +2,6 @@
 
 import { createTeamZodSchema } from "@/app/zod/team.validation";
 import { serverFetch } from "@/lib/server-fetch";
-import { getCookie } from "../auth/tokenHandlers";
 
 export const createTeam = async (_currentState: any, formData: FormData): Promise<any> => {
 

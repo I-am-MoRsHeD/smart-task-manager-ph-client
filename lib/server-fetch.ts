@@ -1,6 +1,7 @@
 import { getCookie } from "@/app/services/auth/tokenHandlers";
 
 
+
 const BACKEND_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000/api';
 
 const serverFetchHelper = async (endPoint: string, options: RequestInit): Promise<Response> => {
@@ -11,7 +12,7 @@ const serverFetchHelper = async (endPoint: string, options: RequestInit): Promis
     const response = await fetch(`${BACKEND_URL}${endPoint}`, {
         headers: {
             ...headers,
-            // Cookie: accessToken ? `accessToken=${accessToken}` : '',
+            'Cookie': accessToken ? `accessToken=${accessToken}` : "",
         },
         ...restOptions
     });

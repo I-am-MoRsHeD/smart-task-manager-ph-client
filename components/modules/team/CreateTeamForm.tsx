@@ -39,8 +39,12 @@ const CreateTeamForm = () => {
     };
 
     useEffect(() => {
-        if (state && state?.success) {
+        if (state && state?.error) {
+            return;
+        } else if (state && state?.success) {
             toast.success(state?.message || "Team created successfully!");
+        } else {
+            toast.error(state?.message);
         }
     }, [state]);
 
