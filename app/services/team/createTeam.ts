@@ -1,7 +1,8 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-
+'use server';
 import { createTeamZodSchema } from "@/app/zod/team.validation";
 import { serverFetch } from "@/lib/server-fetch";
+import { revalidatePath, revalidateTag } from "next/cache";
 
 export const createTeam = async (_currentState: any, formData: FormData): Promise<any> => {
 
@@ -55,10 +56,18 @@ export const createTeam = async (_currentState: any, formData: FormData): Promis
             headers: {
                 'content-type': 'application/json'
             },
-            credentials: 'include'
+            credentials: 'include',
+            next: {
+                tags: ["TEAM"]
+            }
         });
 
         const result = await res.json();
+
+        if (result.success) {
+            revalidateTag("TEAM", "default");
+            revalidatePath('/user/team-list')
+        };
 
         return result;
     } catch (error: any) {

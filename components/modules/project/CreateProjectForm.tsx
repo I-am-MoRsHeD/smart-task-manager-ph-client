@@ -23,7 +23,7 @@ const CreateProjectForm = ({ teams }: { teams: ITeam[] }) => {
     const [state, formAction, isPending] = useActionState(createProject, null);
 
     useEffect(() => {
-        if (state && state?.error) {
+        if (!state || state?.error) {
             return;
         } else if (state && state?.success) {
             toast.success(state?.message || "Project created successfully!");

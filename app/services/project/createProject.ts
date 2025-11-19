@@ -4,6 +4,7 @@
 import { createProjectZodSchema } from "@/app/zod/project.validation";
 import { serverFetch } from "@/lib/server-fetch";
 import { zodValidators } from "@/lib/zodValidators";
+import { revalidatePath, revalidateTag } from "next/cache";
 
 
 export const createProject = async (_currentState: any, formData: FormData): Promise<any> => {
@@ -24,10 +25,18 @@ export const createProject = async (_currentState: any, formData: FormData): Pro
             headers: {
                 'content-type': 'application/json'
             },
-            credentials: 'include'
+            credentials: 'include',
+            next: {
+                tags: ["PROJECT"]
+            }
         });
 
         const result = await res.json();
+
+        if (result.success) {
+            revalidateTag("PROJECT", "default");
+            revalidatePath('/user/create-project')
+        }
 
         return result;
     } catch (error: any) {
