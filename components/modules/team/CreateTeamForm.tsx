@@ -37,9 +37,9 @@ const CreateTeamForm = () => {
         updated[index][field] = value;
         setMembers(updated);
     };
-
+    console.log(state);
     useEffect(() => {
-        if (state && state?.error) {
+        if (!state || state?.error) {
             return;
         } else if (state && state?.success) {
             toast.success(state?.message || "Team created successfully!");

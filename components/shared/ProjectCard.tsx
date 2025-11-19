@@ -15,6 +15,7 @@ const ProjectCard = ({ project }: { project: IProject }) => {
 
             <CardContent className="space-y-2 text-sm font-medium">
                 <p><span className="font-semibold">Team:</span> {project?.linkedTeam?.name}</p>
+                <p><span className="font-semibold">Team members:</span> {project?.linkedTeam?.members?.length}</p>
                 <p><span className="font-semibold">Total Tasks:</span> {project?.tasks?.length}</p>
             </CardContent>
 

@@ -45,7 +45,7 @@ const CreateProjectForm = ({ teams }: { teams: ITeam[] }) => {
                             id="name"
                             name="name"
                             type="text"
-                            placeholder="Bloody Warriors"
+                            placeholder="The First Blood"
                         />
                         <InputFieldError field="name" state={state} />
                     </Field>
