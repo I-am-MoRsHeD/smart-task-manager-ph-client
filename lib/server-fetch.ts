@@ -11,7 +11,7 @@ const serverFetchHelper = async (endPoint: string, options: RequestInit): Promis
     const response = await fetch(`${BACKEND_URL}${endPoint}`, {
         headers: {
             ...headers,
-            Cookie: accessToken ? `accessToken=${accessToken}` : '',
+            // Cookie: accessToken ? `accessToken=${accessToken}` : '',
         },
         ...restOptions
     });
