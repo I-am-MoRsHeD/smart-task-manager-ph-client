@@ -16,6 +16,7 @@ import {
 import { IMember, ITask } from "@/types";
 import { useActionState, useState } from "react";
 import { priorityInfo, statusInfo } from "@/static/dropdownData";
+import { updateTask } from "@/app/services/task/updateTask";
 
 interface EditTaskModalProps {
     open: boolean;
@@ -30,7 +31,7 @@ const EditTaskModal = ({ open, onClose, task, members }: EditTaskModalProps) => 
         members?.find(m => m?.member_no === task?.assignedMember?.member_no) || null
     );
 
-    const [state, formAction, isPending] = useActionState(() => { }, null);
+    const [state, formAction, isPending] = useActionState(updateTask, null);
 
     const capacityError = (() => {
         if (!selectedMember) return null;
@@ -51,7 +52,7 @@ const EditTaskModal = ({ open, onClose, task, members }: EditTaskModalProps) => 
                 </DialogHeader>
 
                 <form action={formAction}>
-                    <input type="hidden" name="taskId" value={task._id} />
+                    <input type="hidden" name="taskId" value={task?._id} />
 
                     <FieldGroup className="space-y-3">
 
@@ -61,9 +62,9 @@ const EditTaskModal = ({ open, onClose, task, members }: EditTaskModalProps) => 
                             <Input
                                 id="title"
                                 name="title"
-                                defaultValue={task.title}
+                                defaultValue={task?.title}
                             />
-                            {/* <InputFieldError field="title" state={state} /> */}
+                            <InputFieldError field="title" state={state} />
                         </Field>
 
                         {/* Description */}
@@ -73,9 +74,9 @@ const EditTaskModal = ({ open, onClose, task, members }: EditTaskModalProps) => 
                                 id="description"
                                 name="description"
                                 rows={3}
-                                defaultValue={task.description}
+                                defaultValue={task?.description}
                             />
-                            {/* <InputFieldError field="description" state={state} /> */}
+                            <InputFieldError field="description" state={state} />
                         </Field>
 
                         {/* Assigned Member */}
@@ -83,9 +84,9 @@ const EditTaskModal = ({ open, onClose, task, members }: EditTaskModalProps) => 
                             <FieldLabel>Assigned Member</FieldLabel>
                             <Select
                                 name="assignedMember"
-                                defaultValue={String(task.assignedMember.member_no)}
+                                defaultValue={String(task?.assignedMember?.member_no)}
                                 onValueChange={(value) => {
-                                    const member = members.find(m => String(m.member_no) === value);
+                                    const member = members?.find(m => String(m?.member_no) === value);
                                     setSelectedMember(member || null);
                                 }}
                             >
@@ -93,12 +94,12 @@ const EditTaskModal = ({ open, onClose, task, members }: EditTaskModalProps) => 
                                     <SelectValue placeholder="Select member" />
                                 </SelectTrigger>
                                 <SelectContent>
-                                    {members.map((member) => (
+                                    {members?.map((member) => (
                                         <SelectItem
-                                            key={member.member_no}
-                                            value={String(member.member_no)}
+                                            key={member?.member_no}
+                                            value={String(member?.member_no)}
                                         >
-                                            {member.name} — {member.role} - {member.capacity}
+                                            {member?.name} — {member?.role} - {member?.capacity}
                                         </SelectItem>
                                     ))}
                                 </SelectContent>
@@ -114,7 +115,7 @@ const EditTaskModal = ({ open, onClose, task, members }: EditTaskModalProps) => 
                             <FieldLabel>Priority</FieldLabel>
                             <Select
                                 name="priority"
-                                defaultValue={task.priority ?? ""}
+                                defaultValue={task?.priority ?? ""}
                             >
                                 <SelectTrigger>
                                     <SelectValue placeholder="Choose priority" />
@@ -134,7 +135,7 @@ const EditTaskModal = ({ open, onClose, task, members }: EditTaskModalProps) => 
                             <FieldLabel>Status</FieldLabel>
                             <Select
                                 name="status"
-                                defaultValue={task.status ?? ""}
+                                defaultValue={task?.status ?? ""}
                             >
                                 <SelectTrigger>
                                     <SelectValue placeholder="Task Status" />

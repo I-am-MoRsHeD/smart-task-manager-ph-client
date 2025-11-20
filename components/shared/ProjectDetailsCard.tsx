@@ -17,7 +17,7 @@ interface ProjectDetailsCardProps {
 const ProjectDetailsCard = ({ project }: ProjectDetailsCardProps) => {
     const [openAddTaskModal, setOpenAddTaskModal] = useState(false);
     const [openEditTaskModal, setOpenEditTaskModal] = useState(false);
-    const [selectedTask, setSelectedTask] = useState<ITask | null>(null)
+    const [selectedTask, setSelectedTask] = useState<ITask | null>();
 
     const handleEdit = (task: ITask) => {
         setOpenEditTaskModal(true);
@@ -25,10 +25,14 @@ const ProjectDetailsCard = ({ project }: ProjectDetailsCardProps) => {
     };
 
     const handleDelete = async (id: string) => {
+        const toastId = toast.loading("Deleting task....");
+
         const result = await deleteTask(id);
         if (result.success) {
-            toast.success(result.message);
-        }
+            toast.success(result.message, { id: toastId });
+        } else {
+            toast.error(result.message, { id: toastId })
+        };
     };
 
     return (
@@ -47,54 +51,60 @@ const ProjectDetailsCard = ({ project }: ProjectDetailsCardProps) => {
                     <h3 className="text-lg font-semibold text-gray-800">Tasks:</h3>
 
                     {project?.tasks?.length ? (
-                        <ul className="space-y-3">
+                        <div className="grid grid-cols-1 lg:grid-cols-2 gap-5">
                             {project?.tasks?.map((task) => (
-                                <li
+                                <div
                                     key={task?._id}
-                                    className="bg-green-200 p-3 rounded-xl border border-black/20 shadow-sm flex justify-between items-center"
+                                    className="bg-green-200 p-3 rounded-xl border border-black/20 shadow-sm flex flex-col"
                                 >
-                                    <div>
+                                    <div className="space-y-2 flex-1">
                                         <p className="font-semibold">{task?.title}</p>
-                                        <p className="text-xs text-gray-700">
-                                            Assigned: {task?.assignedMember?.name}
+                                        <p className="text-xs text-muted-foreground">{task?.description}</p>
+                                        <p className="text-xs text-muted-foreground">
+                                            Assigned: <span className="font-semibold">{task?.assignedMember?.name}</span>
                                         </p>
-                                        <p className="text-xs text-gray-600">
-                                            Status: {task?.status || "Pending"}
+                                        <p className="text-xs text-muted-foreground">
+                                            Priority: <span className="font-semibold">{task?.priority || "Low"}</span>
+                                        </p>
+                                        <p className="text-xs text-muted-foreground">
+                                            Status: <span className="font-semibold">{task?.status || "Pending"}</span>
                                         </p>
                                     </div>
 
-                                    <div className="flex gap-2">
-                                        <Button
-                                            size="sm"
-                                            variant="default"
-                                            className="bg-blue-400 hover:bg-blue-500"
-                                            onClick={() => handleEdit(task)}
-                                        >
-                                            Edit
-                                        </Button>
-                                        {/* delete task */}
-                                        <AlertDialog>
-                                            <AlertDialogTrigger className="bg-red-500 px-2 py-1 rounded-lg text-white">
-                                                Delete
-                                            </AlertDialogTrigger>
-                                            <AlertDialogContent>
-                                                <AlertDialogHeader>
-                                                    <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
-                                                    <AlertDialogDescription>
-                                                    </AlertDialogDescription>
-                                                </AlertDialogHeader>
-                                                <AlertDialogFooter>
-                                                    <AlertDialogCancel>Cancel</AlertDialogCancel>
-                                                    <AlertDialogAction onClick={() => handleDelete(task?._id)}>
-                                                        Delete
-                                                    </AlertDialogAction>
-                                                </AlertDialogFooter>
-                                            </AlertDialogContent>
-                                        </AlertDialog>
+                                    <div className="flex flex-row justify-end grow-0">
+                                        <div className="flex flex-row gap-2">
+                                            <Button
+                                                size="sm"
+                                                variant="default"
+                                                className="bg-blue-400 hover:bg-blue-500"
+                                                onClick={() => handleEdit(task)}
+                                            >
+                                                Edit
+                                            </Button>
+                                            {/* delete task */}
+                                            <AlertDialog>
+                                                <AlertDialogTrigger className="bg-red-500 px-2 py-1 rounded-lg text-white">
+                                                    Delete
+                                                </AlertDialogTrigger>
+                                                <AlertDialogContent>
+                                                    <AlertDialogHeader>
+                                                        <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
+                                                        <AlertDialogDescription>
+                                                        </AlertDialogDescription>
+                                                    </AlertDialogHeader>
+                                                    <AlertDialogFooter>
+                                                        <AlertDialogCancel>Cancel</AlertDialogCancel>
+                                                        <AlertDialogAction onClick={() => handleDelete(task?._id)}>
+                                                            Delete
+                                                        </AlertDialogAction>
+                                                    </AlertDialogFooter>
+                                                </AlertDialogContent>
+                                            </AlertDialog>
+                                        </div>
                                     </div>
-                                </li>
+                                </div>
                             ))}
-                        </ul>
+                        </div>
                     ) : (
                         <p className="text-sm text-gray-600">No tasks available yet.</p>
                     )}

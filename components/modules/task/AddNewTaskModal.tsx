@@ -81,7 +81,7 @@ const AddNewTaskModal = ({ open, onClose, projectId, members }: AddTaskModalProp
                             <FieldLabel>Assigned Member (Name - Role - Capacity)</FieldLabel>
                             <Select
                                 onValueChange={(value) => {
-                                    const member = members.find(m => String(m.member_no) === value);
+                                    const member = members?.find(m => String(m?.member_no) === value);
                                     setSelectedMember(member || null);
                                 }}
                                 name="assignedMember"
@@ -90,12 +90,12 @@ const AddNewTaskModal = ({ open, onClose, projectId, members }: AddTaskModalProp
                                     <SelectValue placeholder="Select member" />
                                 </SelectTrigger>
                                 <SelectContent>
-                                    {members.map((member) => (
+                                    {members?.map((member) => (
                                         <SelectItem
-                                            key={member.member_no}
-                                            value={String(member.member_no)}
+                                            key={member?.member_no}
+                                            value={String(member?.member_no)}
                                         >
-                                            {member.name} — {member.role} - {member.capacity}
+                                            {member?.name} — {member?.role} - {member?.capacity}
                                         </SelectItem>
                                     ))}
                                 </SelectContent>
