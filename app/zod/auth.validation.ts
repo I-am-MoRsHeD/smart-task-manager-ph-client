@@ -1,7 +1,7 @@
 
 import z from 'zod';
 
-export const registerPatientValidateZodSchema = z.object({
+export const registerValidateZodSchema = z.object({
     name: z.string().min(2, {
         message: "Name must be at least 2 characters long"
     }).max(100, {

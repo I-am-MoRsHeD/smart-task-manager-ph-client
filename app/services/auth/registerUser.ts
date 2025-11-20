@@ -1,9 +1,9 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 "use server";
-import { registerPatientValidateZodSchema } from "@/app/zod/auth.validation";
 import { serverFetch } from "@/lib/server-fetch";
 import { zodValidators } from "@/lib/zodValidators";
-import { loginUser } from "./loginUser";
+import { registerValidateZodSchema } from "@/app/zod/auth.validation";
+import { redirect } from "next/navigation";
 
 
 export const registerUser = async (_currentState: any, formData: any): Promise<any> => {
@@ -15,11 +15,11 @@ export const registerUser = async (_currentState: any, formData: any): Promise<a
             password: formData.get("password"),
         };
 
-        if (zodValidators(payload, registerPatientValidateZodSchema).success === false) {
-            return zodValidators(payload, registerPatientValidateZodSchema);
+        if (zodValidators(payload, registerValidateZodSchema).success === false) {
+            return zodValidators(payload, registerValidateZodSchema);
         }
 
-        const validatedPayload = zodValidators(payload, registerPatientValidateZodSchema).data;
+        const validatedPayload = zodValidators(payload, registerValidateZodSchema).data;
 
 
         const res = await serverFetch.post('/auth/register', {
@@ -32,7 +32,7 @@ export const registerUser = async (_currentState: any, formData: any): Promise<a
         const result = await res.json();
 
         if (result.success) {
-            await loginUser(_currentState, formData);
+            redirect('/login')
         }
 
     } catch (error: any) {
