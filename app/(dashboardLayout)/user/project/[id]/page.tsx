@@ -13,7 +13,7 @@ const ProjectDetailsPage = async ({ params }: IProps) => {
     const project = await getProjectById(id);
 
     return (
-        <div>
+        <div className="px-4 lg:px-0">
             <ProjectDetailsCard project={project} />
         </div>
     );

@@ -35,7 +35,7 @@ export default function ReassignHistory({ logs }: ReassignHistoryProps) {
                     recent.map((log, index) => (
                         <div
                             key={index}
-                            className="flex justify-between items-center bg-gray-50 p-3 rounded-lg border"
+                            className="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-2 lg:gap-0 bg-gray-50 p-3 rounded-lg border"
                         >
                             <div className="text-sm">
                                 <strong>{log?.taskId?.title}</strong>
@@ -44,7 +44,7 @@ export default function ReassignHistory({ logs }: ReassignHistoryProps) {
                                 </div>
                             </div>
 
-                            <div className="flex items-center gap-2 text-sm">
+                            <div className="flex items-center gap-2 text-xs md:text-sm">
                                 <span className="text-red-500">{log.fromMember?.name}</span>
                                 <ArrowRight className="h-4 w-4" />
                                 <span className="text-emerald-600">{log.toMember?.name}</span>

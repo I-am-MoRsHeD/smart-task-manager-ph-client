@@ -17,7 +17,7 @@ const CreateProjectPage = async () => {
             <div>
                 <CreateProjectForm teams={teams} />
             </div>
-            <div className='my-20'>
+            <div className='my-20 px-4 lg:px-0'>
                 <div className='flex justify-between items-center'>
                     <h1 className='text-lg font-bold'>Projects :</h1>
                     <Link href="/user/project-list">See all</Link>

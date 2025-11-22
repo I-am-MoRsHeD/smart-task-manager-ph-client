@@ -110,7 +110,7 @@ const ProjectDetailsCard = ({ project }: ProjectDetailsCardProps) => {
                     )}
                 </CardContent>
 
-                <CardFooter className="w-[30%] mx-auto">
+                <CardFooter className="w-full lg:w-[30%] mx-auto">
                     <Button
                         className="w-full bg-foreground hover:bg-muted-foreground"
                         onClick={() => setOpenAddTaskModal(true)}

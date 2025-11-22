@@ -37,7 +37,7 @@ export default function TeamSummeryChart({ members }: TeamCapacityChartProps) {
                 <CardTitle>Team Workload Summary</CardTitle>
             </CardHeader>
 
-            <CardContent className="h-[350px] w-full">
+            <CardContent className="h-[350px] w-full mb-16">
                 <ResponsiveContainer width="100%" height="100%">
                     <BarChart data={data}>
                         <CartesianGrid strokeDasharray="3 3" vertical={false} />
@@ -60,7 +60,7 @@ export default function TeamSummeryChart({ members }: TeamCapacityChartProps) {
                 </ResponsiveContainer>
 
 
-                <div className="text-sm pb-3 flex justify-center gap-4">
+                <div className="text-sm mt-7 grid grid-cols-2 lg:grid-cols-4 w-full">
                     <span className="flex items-center gap-1">
                         <span className="w-3 h-3 rounded-sm bg-blue-500 opacity-40"></span> Capacity
                     </span>
