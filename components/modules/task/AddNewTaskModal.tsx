@@ -14,9 +14,10 @@ import {
     SelectValue,
 } from "@/components/ui/select";
 import { IMember } from "@/types";
-import { useActionState, useState } from "react";
+import { useActionState, useEffect, useState } from "react";
 import { priorityInfo, statusInfo } from "@/static/dropdownData";
 import { addTask } from "@/app/services/task/createTask";
+import { toast } from "sonner";
 
 interface AddTaskModalProps {
     open: boolean;
@@ -30,6 +31,18 @@ const AddNewTaskModal = ({ open, onClose, projectId, members }: AddTaskModalProp
 
     const [state, formAction, isPending] = useActionState(addTask, null);
 
+    useEffect(() => {
+        if (!state || state?.error) {
+            return;
+        } else if (state && state?.success) {
+            onClose();
+            toast.success(state?.message || "Task created successfully!");
+        } else {
+            toast.error(state?.message);
+            onClose();
+        }
+    }, [state]);
+
     const capacityError = (() => {
         if (!selectedMember) return null;
 
@@ -40,6 +53,25 @@ const AddNewTaskModal = ({ open, onClose, projectId, members }: AddTaskModalProp
             ? `${selectedMember.name} has ${selectedMember.currentTask} tasks but capacity is ${selectedMember.capacity}. Assign anyway?`
             : null;
     })();
+
+    const handleAutoAssign = () => {
+        if (!members?.length) return;
+
+        const availableMembers = members.filter(m => m.currentTask < m.capacity);
+
+        let chosen;
+        if (availableMembers.length > 0) {
+            chosen = availableMembers.reduce((prev, curr) =>
+                prev.currentTask <= curr.currentTask ? prev : curr
+            );
+        } else {
+            chosen = members.reduce((prev, curr) =>
+                prev.currentTask <= curr.currentTask ? prev : curr
+            );
+        }
+
+        setSelectedMember(chosen);
+    };
 
 
     return (
@@ -78,14 +110,19 @@ const AddNewTaskModal = ({ open, onClose, projectId, members }: AddTaskModalProp
 
                         {/* Select Assigned Member */}
                         <Field>
-                            <FieldLabel>Assigned Member (Name - Role - Capacity)</FieldLabel>
+                            <div className="flex flex-row justify-between items-center">
+                                <FieldLabel>Assigned Member (Name - Role - Capacity)</FieldLabel>
+                                <Button size="sm" onClick={handleAutoAssign} type="button">Auto assign</Button>
+                            </div>
                             <Select
+                                value={selectedMember ? String(selectedMember.member_no) : ""}
                                 onValueChange={(value) => {
-                                    const member = members?.find(m => String(m?.member_no) === value);
+                                    const member = members?.find(m => String(m.member_no) === value);
                                     setSelectedMember(member || null);
                                 }}
                                 name="assignedMember"
                             >
+
                                 <SelectTrigger>
                                     <SelectValue placeholder="Select member" />
                                 </SelectTrigger>

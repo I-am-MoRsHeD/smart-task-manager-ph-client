@@ -61,11 +61,19 @@ const CreateProjectForm = ({ teams }: { teams: ITeam[] }) => {
                                 <SelectValue placeholder="Select team" />
                             </SelectTrigger>
                             <SelectContent>
-                                {teams?.map((team) => (
-                                    <SelectItem key={team?._id} value={team?._id}>
-                                        {team?.name}
-                                    </SelectItem>
-                                ))}
+                                {
+                                    teams?.length > 0 ? (
+                                        teams?.map((team) => (
+                                            <SelectItem key={team?._id} value={team?._id}>
+                                                {team?.name}
+                                            </SelectItem>
+                                        ))
+                                    ) : (
+                                        <SelectItem value="No" disabled>
+                                            There is no team
+                                        </SelectItem>
+                                    )
+                                }
                             </SelectContent>
                         </Select>
                         <InputFieldError field="linkedTeam" state={state} />
