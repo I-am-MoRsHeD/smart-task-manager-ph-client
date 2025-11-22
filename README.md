@@ -1,36 +1,94 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 🧠 Smart Task Manager — Frontend
 
-## Getting Started
+A modern task and team management web application built with **Next.js**, designed to help users manage projects, assign tasks, track team capacity, and maintain balanced workloads using an automated task reassignment system.
 
-First, run the development server:
+---
 
+## 🚀 Features
+
+### 👤 User & Team Management
+- User authentication (register & login)
+- Create multiple teams
+- Add team members manually (no email required)
+- Member fields:
+  - Name
+  - Role
+  - Capacity (# of tasks they can handle)
+  - Current tasks auto-tracked
+
+### 📌 Project & Task Management
+- Create and manage multiple projects
+- Assign projects to a specific team
+- Tasks include:
+  - Title, Description
+  - Assigned Member
+  - Priority (Low / Medium / High)
+  - Status (Pending / In Progress / Done)
+- Edit, Delete, and Filter tasks
+
+### 🎯 Smart Workload Assignment
+- Warn when assigning a task beyond member capacity
+- Auto-assign selects the member with least workload
+
+### 🔄 Auto Reassignment (Dashboard Button)
+- Detects overloaded members
+- Moves tasks automatically to free members
+- High-priority tasks stay with current member
+
+### 📊 Dashboard Insights
+- Total Projects & Total Tasks
+- Team Workload Bar Chart
+- Auto Reassign button
+- Recent Activity Logs (latest 5)
+
+---
+
+## 🛠️ Tech Stack
+
+| Technology | Purpose |
+|-----------|---------|
+| **Next.js (App Router)** | Frontend framework |
+| **TypeScript** | Type safety |
+| **TailwindCSS + Shadcn UI** | Modern UI components |
+| **React Server Actions** | Secure API interactions |
+| **Recharts** | Dashboard data visualization |
+| **JWT Auth** | Secure session handling |
+
+
+---
+## 🧰 Installation & Setup
+
+### 1️⃣ Clone the repository
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+git clone https://github.com/I-am-MoRsHeD/smart-task-manager-ph-client.git
+cd smart-task-manager-ph-client
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### 2️⃣ Install dependencies
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```bash
+bun install
+# or
+npm install
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+### 3️⃣ Add environment variables
+```bash
+NEXT_PUBLIC_BASE_URL=https://your-backend-api-url.com/api
+JWT_ACCESS_SECRET=access-secret
+JWT_ACCESS_EXPIRES=access_expires
+```
+### 4️⃣ Run the development server
+```bash
+bun run dev
+# or
+npm run dev
+```
+### 4️⃣ Build for production
+```bash
+bun run build
+bun start
+# or
+npm run build
+npm start
+```
